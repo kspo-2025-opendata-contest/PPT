@@ -5,10 +5,17 @@ import { MapPinOff, UserX, Info, TrendingUp, Building2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
 
 // 실제 공공데이터 기반 (국민체육진흥공단, 2025년 6월)
+// 인구 10만명당 공공체육시설 수
 const facilityData = [
-  { name: '수도권', facilities: 33, professional: 45, facilitiesLabel: '33개', professionalLabel: '45%' },
-  { name: '비수도권 도시', facilities: 65, professional: 28, facilitiesLabel: '65개', professionalLabel: '28%' },
-  { name: '농어촌', facilities: 134, professional: 12, facilitiesLabel: '134개', professionalLabel: '12%' },
+  { name: '수도권', value: 33, label: '33개' },
+  { name: '비수도권 도시', value: 65, label: '65개' },
+  { name: '농어촌', value: 134, label: '134개' },
+];
+
+// 스포츠강좌이용권 수혜자 비율 (2025년, 실제 데이터)
+const voucherData = [
+  { name: '수도권', value: 39.2, label: '39.2%' },
+  { name: '비수도권', value: 60.8, label: '60.8%' },
 ];
 
 const ProblemSlide: React.FC<SlideProps> = () => {
@@ -31,7 +38,7 @@ const ProblemSlide: React.FC<SlideProps> = () => {
           <p className="text-slate-200 text-xl leading-relaxed">
             농어촌 시설이 인구 대비 <strong className="text-white">4배</strong> 많지만,<br/>
             전국 시설의 <strong className="text-amber-400">75%가 마을 간이운동장</strong>.<br/>
-            <strong className="text-white">전문 훈련 환경</strong>은 여전히 수도권에 집중됩니다.
+            <strong className="text-white">전문 훈련 환경</strong>은 여전히 부족합니다.
           </p>
         </motion.div>
 
@@ -55,7 +62,7 @@ const ProblemSlide: React.FC<SlideProps> = () => {
         </motion.div>
       </div>
 
-      {/* Right: Data Viz - 역설적 비교 */}
+      {/* Right: Data Viz - 실제 데이터 기반 */}
       <div className="flex-1 bg-slate-800/40 rounded-3xl p-8 border border-white/10 flex flex-col">
         <div className="mb-4">
            <h3 className="text-2xl font-bold text-white mb-2">지역별 체육 인프라 현황</h3>
@@ -64,16 +71,14 @@ const ProblemSlide: React.FC<SlideProps> = () => {
            </p>
         </div>
 
-        {/* 두 가지 지표 비교 */}
+        {/* 시설 수 차트 */}
         <div className="flex-1 flex flex-col gap-4">
-          {/* 시설 수 */}
           <div className="flex-1 bg-black/20 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-2">
               <Building2 size={18} className="text-brand-400" />
               <span className="text-sm font-bold text-slate-300">인구 10만명당 공공체육시설 수</span>
-              <span className="text-xs text-slate-500 ml-auto">농어촌이 가장 많음</span>
             </div>
-            <div className="h-[90px] min-w-0">
+            <div className="h-[100px] min-w-0">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={facilityData} layout="vertical" margin={{ left: 0, right: 50, top: 0, bottom: 0 }}>
                   <XAxis type="number" domain={[0, 150]} hide />
@@ -85,24 +90,27 @@ const ProblemSlide: React.FC<SlideProps> = () => {
                     axisLine={false}
                     tickLine={false}
                   />
-                  <Bar dataKey="facilities" radius={[0, 8, 8, 0]} barSize={24} fill="#14b8a6">
-                    <LabelList dataKey="facilitiesLabel" position="right" fill="white" fontSize={14} fontWeight="700" />
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} fill="#14b8a6">
+                    <LabelList dataKey="label" position="right" fill="white" fontSize={14} fontWeight="700" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
+            <p className="text-xs text-slate-500 mt-2">
+              수도권: 8,622개 / 2,608만명 | 비수도권: 33,699개 / 2,511만명
+            </p>
           </div>
 
-          {/* 전문시설 비율 */}
+          {/* 스포츠강좌이용권 수혜자 */}
           <div className="flex-1 bg-black/20 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-2">
-              <TrendingUp size={18} className="text-red-400" />
-              <span className="text-sm font-bold text-slate-300">전문 훈련시설 비율 (체육관, 수영장 등)</span>
-              <span className="text-xs text-slate-500 ml-auto">수도권이 가장 높음</span>
+              <TrendingUp size={18} className="text-blue-400" />
+              <span className="text-sm font-bold text-slate-300">스포츠강좌이용권 수혜자 분포</span>
+              <span className="text-xs text-slate-500 ml-auto">총 103,513명</span>
             </div>
-            <div className="h-[90px] min-w-0">
+            <div className="h-[70px] min-w-0">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={facilityData} layout="vertical" margin={{ left: 0, right: 50, top: 0, bottom: 0 }}>
+                <BarChart data={voucherData} layout="vertical" margin={{ left: 0, right: 50, top: 0, bottom: 0 }}>
                   <XAxis type="number" domain={[0, 100]} hide />
                   <YAxis
                     dataKey="name"
@@ -112,12 +120,15 @@ const ProblemSlide: React.FC<SlideProps> = () => {
                     axisLine={false}
                     tickLine={false}
                   />
-                  <Bar dataKey="professional" radius={[0, 8, 8, 0]} barSize={24} fill="#ef4444">
-                    <LabelList dataKey="professionalLabel" position="right" fill="white" fontSize={14} fontWeight="700" />
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} fill="#3b82f6">
+                    <LabelList dataKey="label" position="right" fill="white" fontSize={14} fontWeight="700" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
+            <p className="text-xs text-slate-500 mt-2">
+              수도권 40,588명 / 비수도권 62,925명 (2025년)
+            </p>
           </div>
         </div>
 
