@@ -34,8 +34,8 @@ const ArchitectureSlide: React.FC<SlideProps> = () => {
               <div className="flex-1">
                 <p className="text-white font-black text-lg mb-1">공공데이터 CSV → ETL → PostgreSQL</p>
                 <p className="text-slate-400 text-sm leading-relaxed font-medium">
-                  체력측정(30,000건), 청소년 프로그램(200,000건),<br/>
-                  체육시설(3,500건) 등 5개 핵심 데이터셋
+                  체력측정(8,500건), 청소년 프로그램(172,000건),<br/>
+                  공공체육시설(42,000개) 등 5개 핵심 데이터셋
                 </p>
               </div>
             </div>
