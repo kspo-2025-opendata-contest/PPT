@@ -2,6 +2,8 @@
 
 2025 국민체육진흥공단 공공데이터 활용 경진대회 대상(1위) 발표자료를 웹으로 구현한 프로젝트입니다.
 
+**배포 URL:** https://suminjae-ppt.onrender.com/
+
 ## 기술 스택
 
 - React + TypeScript
