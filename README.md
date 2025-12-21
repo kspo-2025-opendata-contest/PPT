@@ -1,20 +1,34 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 숨인재 발표자료
 
-# Run and deploy your AI Studio app
+2025 국민체육진흥공단 공공데이터 활용 경진대회 발표자료를 웹으로 구현한 프로젝트입니다.
 
-This contains everything you need to run your app locally.
+## 기술 스택
 
-View your app in AI Studio: https://ai.studio/apps/drive/1V3McMdtoFINVWjHp7GXs8_WlPzu5xcDY
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Recharts
 
-## Run Locally
+## 실행 방법
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js
 
+1. 의존성 설치:
+   ```bash
+   npm install
+   ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+2. 개발 서버 실행:
+   ```bash
+   npm run dev
+   ```
+
+## 팀 소개
+
+**팀명:** 숨어있는 재능을 찾아서
+
+- 신주용 (PM & Full Stack)
+- 강지나 (Frontend & UI/UX)
+- 김현웅 (Data Modeling)
+- 송민지 (Backend Developer)
