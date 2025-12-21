@@ -40,7 +40,20 @@ const slides: SlideData[] = [
 ];
 
 function App() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // URL 파라미터에서 슬라이드 번호 읽기 (PDF 생성용)
+  const getInitialSlide = () => {
+    const params = new URLSearchParams(window.location.search);
+    const slideParam = params.get('slide');
+    if (slideParam) {
+      const slideNum = parseInt(slideParam, 10);
+      if (!isNaN(slideNum) && slideNum >= 0 && slideNum < slides.length) {
+        return slideNum;
+      }
+    }
+    return 0;
+  };
+
+  const [currentSlide, setCurrentSlide] = useState(getInitialSlide);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev < slides.length - 1 ? prev + 1 : prev));
