@@ -33,7 +33,7 @@ const Layout: React.FC<LayoutProps> = ({ children, title, subtitle, pageNumber, 
           )}
         </div>
         <div className="flex flex-col items-end">
-          <span className="text-white/60 font-bold text-sm">2025년 국민체육진흥공단 공공데이터 활용 경진대회</span>
+          <span className="text-white/60 font-bold text-sm">제4회 문화체육관광 AI·데이터 활용 공모전</span>
           <div className="flex items-center gap-2 mt-2">
             <div className="h-1 w-32 bg-slate-800 rounded-full overflow-hidden">
               <motion.div 

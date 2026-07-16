@@ -21,7 +21,7 @@ const IntroSlide: React.FC<SlideProps> = () => {
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 font-semibold backdrop-blur-sm shadow-lg shadow-brand-500/10 mb-8"
         >
           <Trophy size={18} />
-          <span>2025년 국민체육진흥공단 공공데이터 활용 경진대회 대상작</span>
+          <span>2025 국민체육진흥공단 공공데이터 활용 경진대회 <strong className="text-brand-200">대상 수상작</strong></span>
         </motion.div>
 
         {/* Title */}
@@ -54,8 +54,8 @@ const IntroSlide: React.FC<SlideProps> = () => {
         >
           {[
             { icon: Database, text: "공공데이터 5종 융합" },
-            { icon: Sparkles, text: "AI 기반 재능 진단" },
-            { icon: Trophy, text: "맞춤형 성장 로드맵" }
+            { icon: Trophy, text: "데이터 기반 재능 진단" },
+            { icon: Sparkles, text: "생성형 AI 맞춤 코칭" }
           ].map((item, idx) => (
             <div
               key={idx}
