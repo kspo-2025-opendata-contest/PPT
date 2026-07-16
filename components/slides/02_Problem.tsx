@@ -90,7 +90,7 @@ const ProblemSlide: React.FC<SlideProps> = () => {
                     axisLine={false}
                     tickLine={false}
                   />
-                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} fill="#14b8a6">
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} fill="#14b8a6" isAnimationActive={false}>
                     <LabelList dataKey="label" position="right" fill="white" fontSize={14} fontWeight="700" />
                   </Bar>
                 </BarChart>
@@ -120,7 +120,7 @@ const ProblemSlide: React.FC<SlideProps> = () => {
                     axisLine={false}
                     tickLine={false}
                   />
-                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} fill="#3b82f6">
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} fill="#3b82f6" isAnimationActive={false}>
                     <LabelList dataKey="label" position="right" fill="white" fontSize={14} fontWeight="700" />
                   </Bar>
                 </BarChart>

@@ -7,10 +7,10 @@ const ImpactOutcomeSlide: React.FC<SlideProps> = () => {
     {
       id: 1,
       title: "데이터 활용 범위",
-      value: "17만+",
+      value: "40만+",
       unit: "건",
       logicTitle: "Data Coverage",
-      logicDesc: "청소년 프로그램 172,000건 + 체력측정 8,500건 + 시설현황 42,000개를 통합 분석",
+      logicDesc: "청소년 프로그램 172,000건 + 체력측정 20만건 + 시설현황 42,000개를 통합 분석",
       color: "text-brand-400",
       bg: "bg-brand-500/5"
     },
@@ -20,7 +20,7 @@ const ImpactOutcomeSlide: React.FC<SlideProps> = () => {
       value: "5종목",
       unit: "패럴림픽",
       logicTitle: "Inclusion Logic",
-      logicDesc: "장애 유형별(지체·시각·청각·지적) 맞춤 분석으로 골볼, 보치아 등 패럴림픽 종목 매칭",
+      logicDesc: "장애 유형별(지체·시각·청각·지적) 패럴림픽 종목 진단 + 맞춤 프로그램 추천까지 실제 구현",
       color: "text-blue-400",
       bg: "bg-blue-500/5"
     },
@@ -87,7 +87,7 @@ const ImpactOutcomeSlide: React.FC<SlideProps> = () => {
         <div className="bg-slate-900/80 px-8 py-2 rounded-full border border-slate-700 flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
           <span className="text-slate-400 text-xs font-bold tracking-wider">
-            출처: 국민체육진흥공단 공공데이터 (2025년 6월 기준)
+            출처: 국민체육진흥공단 공공데이터 (2025~2026.3 최신 기준)
           </span>
         </div>
       </div>

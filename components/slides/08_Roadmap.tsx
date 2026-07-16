@@ -8,7 +8,7 @@ const RoadmapSlide: React.FC<SlideProps> = () => {
     {
       phase: "Phase 1. 도입기",
       title: "서비스 고도화",
-      items: ["체력 지표 기반 재능 진단 알고리즘 검증", "사회적 배려 대상자 데이터 태깅 시스템", "공공데이터 품질 개선 및 API 최적화"],
+      items: ["지자체·학교 연계 실증(파일럿) 추진", "사회적 배려 대상자 데이터 태깅 시스템", "공공데이터 품질 개선 및 API 최적화"],
       icon: Target,
       borderColor: "border-brand-500",
       textColor: "text-brand-500",

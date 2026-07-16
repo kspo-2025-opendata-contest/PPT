@@ -9,7 +9,7 @@ const AISlide: React.FC<SlideProps> = () => {
       <div className="text-center mb-8">
         <h2 className="text-4xl font-black mb-3 text-white">AI 매칭 및 분석 알고리즘</h2>
         <p className="text-slate-200 text-xl max-w-5xl mx-auto whitespace-nowrap">
-          <strong className="text-brand-400 font-black">FastAPI 서버</strong>와 <strong className="text-brand-400 font-black">Gemini 3 Pro</strong>를 연동하여 개인별 맞춤형 성장 가이드를 생성합니다.
+          <strong className="text-brand-400 font-black">통계 진단 모델</strong>과 <strong className="text-brand-400 font-black">생성형 AI(OpenAI)</strong>를 결합해 개인별 맞춤형 성장 가이드를 생성합니다.
         </p>
       </div>
 
@@ -28,7 +28,7 @@ const AISlide: React.FC<SlideProps> = () => {
           <h3 className="text-2xl font-black text-white mb-4">Data Context</h3>
           <div className="text-slate-200 text-lg space-y-3 bg-slate-900/60 p-5 rounded-2xl w-full border border-white/5 font-bold">
             <p>개인별 체력 측정 데이터</p>
-            <p>Z-Score 기반 정규화 지표</p>
+            <p>백분위 기반 정규화 지표</p>
             <p>성별·연령별 통계 컨텍스트</p>
           </div>
           <div className="mt-auto pt-4 font-mono text-[10px] text-blue-400 font-black uppercase tracking-[0.3em]">Backend Pre-processing</div>
@@ -38,14 +38,14 @@ const AISlide: React.FC<SlideProps> = () => {
           <ArrowRight size={40} strokeWidth={3} />
         </div>
 
-        {/* Step 2: Gemini API */}
+        {/* Step 2: Hybrid AI Engine */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4 }}
           className="flex-[1.4] bg-gradient-to-br from-slate-800 to-slate-900 rounded-[2.5rem] p-8 border-2 border-brand-500/50 shadow-[0_0_60px_rgba(20,184,166,0.2)] relative flex flex-col items-center text-center min-w-[350px]"
         >
-          <div className="absolute -top-4 px-8 py-2 bg-brand-500 rounded-full text-[10px] font-black text-white shadow-xl tracking-[0.2em] uppercase">GEMINI 3 PRO ENGINE</div>
+          <div className="absolute -top-4 px-8 py-2 bg-brand-500 rounded-full text-[10px] font-black text-white shadow-xl tracking-[0.2em] uppercase">HYBRID AI ENGINE</div>
           
           <div className="w-20 h-20 bg-brand-500/20 rounded-full flex items-center justify-center mb-6 text-brand-400 shadow-[0_0_30px_rgba(20,184,166,0.4)]">
             <Zap size={40} className="animate-pulse" />
@@ -57,16 +57,16 @@ const AISlide: React.FC<SlideProps> = () => {
              <div className="bg-slate-900/90 p-5 rounded-2xl border border-slate-700 flex items-center gap-5 hover:border-brand-500/50 transition-colors">
                <Network size={28} className="text-purple-400 shrink-0" />
                <div className="text-left">
-                 <div className="text-white font-black text-lg mb-0.5">Semantic Analysis</div>
-                 <div className="text-slate-400 text-sm leading-tight font-medium">측정 수치와 스포츠 종목별 역량 간의<br />논리적 유사성 분석</div>
+                 <div className="text-white font-black text-lg mb-0.5">통계 종목 매칭</div>
+                 <div className="text-slate-400 text-sm leading-tight font-medium">측정 수치 × 종목별 가중치 모델로<br />최적 종목을 정량 산출</div>
                </div>
              </div>
 
              <div className="bg-slate-900/90 p-5 rounded-2xl border border-slate-700 flex items-center gap-5 hover:border-brand-500/50 transition-colors">
                <Cpu size={28} className="text-green-400 shrink-0" />
                <div className="text-left">
-                 <div className="text-white font-black text-lg mb-0.5">Content Generation</div>
-                 <div className="text-slate-400 text-sm leading-tight font-medium">부족한 역량 보완을 위한<br />텍스트 기반 전문 운동 코멘트 생성</div>
+                 <div className="text-white font-black text-lg mb-0.5">생성형 AI 코칭</div>
+                 <div className="text-slate-400 text-sm leading-tight font-medium">OpenAI 기반, 존중을 담은<br />개인 맞춤 코칭 코멘트 생성</div>
                </div>
              </div>
           </div>

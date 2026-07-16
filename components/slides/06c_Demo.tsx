@@ -4,19 +4,19 @@ import { SlideProps } from '../../types';
 import { ArrowRight } from 'lucide-react';
 
 const steps = [
-  { img: '/demo/f1_input.png', no: '01', title: '체력 데이터 입력', desc: '장애 유형(지체장애) 선택 후 측정값 입력' },
-  { img: '/demo/f2_scores.png', no: '02', title: '재능 진단 결과', desc: '휠체어농구·패럴림픽수영 등 종목별 정량 진단' },
+  { img: '/demo/c_g1_matching.png', no: '05', title: '프로그램 검색·필터', desc: '지역·종목·대상 조건으로 참여 가능한 프로그램 탐색' },
+  { img: '/demo/p_modal_card.png', no: '06', title: '프로그램 상세', desc: '주소·기간·수강료·정원·홈페이지까지 상세 정보' },
 ];
 
-const DemoSlide: React.FC<SlideProps> = () => {
+const Demo3Slide: React.FC<SlideProps> = () => {
   return (
     <div className="h-full flex flex-col items-center justify-center px-8 py-2">
       <div className="text-center mb-5">
         <h2 className="text-3xl font-black text-white tracking-tight mb-1">
-          서비스 시연 <span className="text-brand-400">① 재능 진단</span>
+          서비스 시연 <span className="text-brand-400">③ 프로그램 매칭</span>
         </h2>
         <p className="text-slate-400 text-base font-medium">
-          장애 학생의 재능을 데이터로 진단 · <span className="font-mono text-slate-500">hidden-talent-web.onrender.com</span>
+          진단 종목에 맞는 실제 참여 프로그램 연결 · <span className="font-mono text-slate-500">hidden-talent-web.onrender.com</span>
         </p>
       </div>
 
@@ -52,4 +52,4 @@ const DemoSlide: React.FC<SlideProps> = () => {
   );
 };
 
-export default DemoSlide;
+export default Demo3Slide;

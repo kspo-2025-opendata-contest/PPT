@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const TOTAL_SLIDES = 15;
-const OUTPUT_PATH = '/Users/shinjuyong/Desktop/경진대회 발표자료(1등)/숨인재_발표자료.pdf';
+const OUTPUT_PATH = '/Users/shinjuyong/Desktop/경진대회 발표자료(1등)/숨인재_발표자료_v3.pdf';
 
 async function generatePDF() {
   console.log('브라우저 시작...');
@@ -16,11 +16,14 @@ async function generatePDF() {
 
   const page = await browser.newPage();
 
-  // 16:9 비율 (1920x1080)
+  // 사용자 스크린샷 기준 (3024x1616 / 2 = 1512x808)
+  const viewportWidth = 1512;
+  const viewportHeight = 808;
+
   await page.setViewport({
-    width: 1920,
-    height: 1080,
-    deviceScaleFactor: 2 // 고해상도
+    width: viewportWidth,
+    height: viewportHeight,
+    deviceScaleFactor: 2 // 맥북 Retina (출력: 3024x1616)
   });
 
   const pdfDoc = await PDFDocument.create();
@@ -36,8 +39,8 @@ async function generatePDF() {
       timeout: 30000
     });
 
-    // 애니메이션 완료 대기
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // 애니메이션 완료 대기 (framer-motion 진입 애니메이션 여유)
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     // 스크린샷 캡처
     const screenshot = await page.screenshot({
@@ -47,15 +50,13 @@ async function generatePDF() {
 
     // PDF에 이미지 추가
     const image = await pdfDoc.embedPng(screenshot);
-    const pageWidth = 1920;
-    const pageHeight = 1080;
 
-    const pdfPage = pdfDoc.addPage([pageWidth, pageHeight]);
+    const pdfPage = pdfDoc.addPage([viewportWidth, viewportHeight]);
     pdfPage.drawImage(image, {
       x: 0,
       y: 0,
-      width: pageWidth,
-      height: pageHeight
+      width: viewportWidth,
+      height: viewportHeight
     });
   }
 

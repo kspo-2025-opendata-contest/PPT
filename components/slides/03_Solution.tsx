@@ -24,8 +24,8 @@ const SolutionSlide: React.FC<SlideProps> = () => {
       eng: "ANALYZE",
       desc: (
         <>
-          Z-Score 분석으로 <strong className="text-white">강점 요인</strong>을 도출,<br />
-          AI가 <strong className="text-white">적합 종목을 추천</strong>
+          백분위 분석으로 <strong className="text-white">강점 요인</strong>을 도출,<br />
+          <strong className="text-white">적합 종목을 정밀 추천</strong>
         </>
       ),
       icon: Cpu,

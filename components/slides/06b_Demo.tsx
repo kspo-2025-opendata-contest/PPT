@@ -1,22 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SlideProps } from '../../types';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 
 const steps = [
-  { img: '/demo/f1_input.png', no: '01', title: '체력 데이터 입력', desc: '장애 유형(지체장애) 선택 후 측정값 입력' },
-  { img: '/demo/f2_scores.png', no: '02', title: '재능 진단 결과', desc: '휠체어농구·패럴림픽수영 등 종목별 정량 진단' },
+  { img: '/demo/f_ai.png', no: '03', title: 'AI 코칭 코멘트', desc: '존중 기반 생성형 AI(OpenAI)가 개인 맞춤 조언 생성' },
+  { img: '/demo/f3_recommend.png', no: '04', title: '장애인 프로그램 추천', desc: '지역 장애인 체육 프로그램(장애인수영 등) 연계' },
 ];
 
-const DemoSlide: React.FC<SlideProps> = () => {
+const Demo2Slide: React.FC<SlideProps> = () => {
   return (
     <div className="h-full flex flex-col items-center justify-center px-8 py-2">
-      <div className="text-center mb-5">
+      <div className="text-center mb-4">
         <h2 className="text-3xl font-black text-white tracking-tight mb-1">
-          서비스 시연 <span className="text-brand-400">① 재능 진단</span>
+          서비스 시연 <span className="text-brand-400">② AI 코칭 · 맞춤 추천</span>
         </h2>
         <p className="text-slate-400 text-base font-medium">
-          장애 학생의 재능을 데이터로 진단 · <span className="font-mono text-slate-500">hidden-talent-web.onrender.com</span>
+          진단에서 끝나지 않고 실제 지원으로 연결 · <span className="font-mono text-slate-500">hidden-talent-web.onrender.com</span>
         </p>
       </div>
 
@@ -48,8 +48,18 @@ const DemoSlide: React.FC<SlideProps> = () => {
           </React.Fragment>
         ))}
       </div>
+
+      <a
+        href="https://hidden-talent-web.onrender.com/#home"
+        target="_blank"
+        rel="noreferrer"
+        className="mt-4 inline-flex items-center gap-2 text-brand-400 font-bold text-base hover:text-brand-300 transition-colors"
+      >
+        <span className="border-b-2 border-brand-500/60 pb-0.5">라이브 서비스 바로가기</span>
+        <ExternalLink size={18} />
+      </a>
     </div>
   );
 };
 
-export default DemoSlide;
+export default Demo2Slide;

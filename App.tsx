@@ -14,6 +14,9 @@ import TechSlide from './components/slides/05_Tech';
 import AISlide from './components/slides/05_AI_Logic';
 import ArchitectureSlide from './components/slides/05_Architecture';
 import DemoSlide from './components/slides/06_Demo';
+import Demo2Slide from './components/slides/06b_Demo';
+import Demo3Slide from './components/slides/06c_Demo';
+import Demo4Slide from './components/slides/06d_Demo';
 import ImpactLogicSlide from './components/slides/07_Impact_Logic';
 import ImpactOutcomeSlide from './components/slides/07_Impact_Outcome';
 import RoadmapSlide from './components/slides/08_Roadmap';
@@ -31,7 +34,10 @@ const slides: SlideData[] = [
   { id: 7, component: TechSlide, title: "핵심 기술: 통계 모델" },
   { id: 8, component: AISlide, title: "핵심 기술: AI 알고리즘" },
   { id: 9, component: ArchitectureSlide, title: "시스템 구조 및 기술 스택" },
-  { id: 10, component: DemoSlide, title: "서비스 시연" },
+  { id: 10, component: DemoSlide, title: "서비스 시연 ① 재능 진단" },
+  { id: 101, component: Demo2Slide, title: "서비스 시연 ② AI 코칭·추천" },
+  { id: 102, component: Demo3Slide, title: "서비스 시연 ③ 프로그램 매칭" },
+  { id: 103, component: Demo4Slide, title: "서비스 시연 ④ 인프라 대시보드" },
   { id: 11, component: ImpactLogicSlide, title: "기대 효과: 서비스 가치" },
   { id: 12, component: ImpactOutcomeSlide, title: "기대 효과: 정량적 성과" },
   { id: 13, component: RoadmapSlide, title: "향후 발전 계획" },

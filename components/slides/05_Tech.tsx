@@ -34,7 +34,7 @@ const TechSlide: React.FC<SlideProps> = () => {
           transition={{ delay: 0.5 }}
           className="absolute top-6 left-6 bg-slate-900/90 backdrop-blur border border-slate-600 px-4 py-2 rounded-lg shadow-lg z-10"
         >
-          <code className="text-brand-400 font-mono text-lg font-bold">T = 50 + 10(Z)</code>
+          <code className="text-brand-400 font-mono text-lg font-bold">P5~P95 → 0-100</code>
         </motion.div>
 
         <ResponsiveContainer width="100%" height="80%">
@@ -51,7 +51,7 @@ const TechSlide: React.FC<SlideProps> = () => {
             */}
             <XAxis dataKey="z" type="number" domain={['dataMin', 'dataMax']} hide />
             <YAxis hide />
-            <Area type="monotone" dataKey="y" stroke="#14b8a6" strokeWidth={3} fillOpacity={1} fill="url(#colorY)" />
+            <Area type="monotone" dataKey="y" stroke="#14b8a6" strokeWidth={3} fillOpacity={1} fill="url(#colorY)" isAnimationActive={false} />
             {/* User Position at Z = 1.7 (Top 4.5% approx, Grade 1) */}
             <ReferenceLine x={1.7} stroke="#fff" strokeWidth={2} strokeDasharray="5 5" label={{ position: 'top', value: 'You (1등급)', fill: 'white', fontSize: 18, fontWeight: 'bold' }} />
           </AreaChart>
@@ -69,9 +69,9 @@ const TechSlide: React.FC<SlideProps> = () => {
         <div>
           <h2 className="text-3xl font-bold mb-4 text-white">재능 등급 산출 알고리즘</h2>
           <p className="text-slate-300 text-lg leading-relaxed">
-            국민체육진흥공단의 방대한 측정 데이터를 모집단으로 하여,<br/> 
+            국민체력100 실측 3.5만명(청소년)을 모집단으로 하여,<br/>
             개인의 기록이 전체 분포에서 어느 위치에 해당하는지<br/>
-            <strong className="text-white">통계적으로 검증된 Z-Score 모델</strong>을 사용해 분석합니다.
+            <strong className="text-white">실데이터로 검증된 백분위 정규화 모델</strong>로 분석합니다.
           </p>
         </div>
 
@@ -80,17 +80,17 @@ const TechSlide: React.FC<SlideProps> = () => {
             <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-800 border-4 border-brand-500" />
             <h4 className="font-bold text-white text-xl mb-2">1. 데이터 정규화 (Normalization)</h4>
             <p className="text-slate-300 text-base leading-relaxed">
-              성별·연령별로 상이한 체력 데이터 분포를 표준 정규 분포로 변환하여<br/>
+              성별·연령별로 상이한 체력 분포를 동일 기준으로 정규화하여<br/>
               서로 다른 항목(근력 vs 지구력)간의 <strong className="text-white">비교 불가능 문제를 해결</strong>했습니다.
             </p>
           </div>
 
           <div className="relative pl-8 border-l-4 border-slate-700">
              <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-800 border-4 border-brand-500" />
-            <h4 className="font-bold text-white text-xl mb-2">2. T-Score 기반 등급제</h4>
+            <h4 className="font-bold text-white text-xl mb-2">2. 백분위 기반 5단계 등급제</h4>
             <p className="text-slate-300 text-base leading-relaxed">
-              소수점으로 산출되는 Z-Score를 이해하기 쉬운 <strong className="text-white">T-Score(평균 50, 편차 10)</strong>로 변환하고,<br/> 
-              이를 기반으로 1~5등급의 직관적인 '재능 등급'을 부여합니다.
+              각 체력 항목을 <strong className="text-white">0~100으로 정규화</strong>하고, 실제 점수 분포로 임계값을 보정하여<br/>
+              1~5단계의 직관적인 '재능 등급'을 부여합니다.
             </p>
           </div>
 
@@ -98,7 +98,7 @@ const TechSlide: React.FC<SlideProps> = () => {
              <h5 className="font-bold text-brand-300 text-base mb-1">Why This Matters?</h5>
              <p className="text-sm text-brand-100 leading-relaxed">
                단순히 "오래달리기 50회"라는 기록은 의미가 없습니다.<br/>
-               <strong className="text-white">"또래 상위 0.1% 수준"</strong>이라는 상대적 위치 정보가 재능 발견의 핵심입니다.
+               <strong className="text-white">"또래 상위 5% 수준"</strong>이라는 상대적 위치 정보가 재능 발견의 핵심입니다.
              </p>
           </div>
         </div>

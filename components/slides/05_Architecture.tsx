@@ -7,7 +7,7 @@ import { Database, Cpu, MonitorSmartphone } from 'lucide-react';
 import viteLogo from '../../vite logo.png';
 import fastapiLogo from '../../fastapi logo.svg';
 import renderLogo from '../../render logo.jpeg';
-import geminiLogo from '../../gemini logo.png';
+import openaiLogo from '../../openai-logo.svg';
 
 const ArchitectureSlide: React.FC<SlideProps> = () => {
   return (
@@ -34,7 +34,7 @@ const ArchitectureSlide: React.FC<SlideProps> = () => {
               <div className="flex-1">
                 <p className="text-white font-black text-lg mb-1">공공데이터 CSV → ETL → PostgreSQL</p>
                 <p className="text-slate-400 text-sm leading-relaxed font-medium">
-                  체력측정(8,500건), 청소년 프로그램(172,000건),<br/>
+                  체력측정(20만건), 청소년 프로그램(172,000건),<br/>
                   공공체육시설(42,000개) 등 5개 핵심 데이터셋
                 </p>
               </div>
@@ -46,7 +46,7 @@ const ArchitectureSlide: React.FC<SlideProps> = () => {
                 <Cpu size={28} />
               </div>
               <div className="flex-1">
-                <p className="text-white font-black text-lg mb-1">FastAPI 서버 + Gemini API 연동</p>
+                <p className="text-white font-black text-lg mb-1">FastAPI 서버 + 생성형 AI(OpenAI) 연동</p>
                 <p className="text-slate-400 text-sm leading-relaxed font-medium">
                   연령·성별 그룹별 체력 분포 분석,<br/>
                   가중치 기반 재능 점수 산출, AI 맞춤형 코멘트 생성
@@ -98,10 +98,10 @@ const ArchitectureSlide: React.FC<SlideProps> = () => {
 
           <motion.div whileHover={{ y: -5 }} className="bg-slate-800/80 p-8 rounded-3xl border border-slate-700 flex flex-col items-center text-center shadow-lg">
             <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-slate-800 border border-slate-600 overflow-hidden">
-              <img src={geminiLogo} alt="Gemini" className="w-10 h-10 object-contain" />
+              <img src={openaiLogo} alt="OpenAI" className="w-9 h-9 object-contain" />
             </div>
             <h4 className="text-slate-500 text-xs font-black uppercase mb-2 tracking-widest">AI Engine</h4>
-            <p className="text-white font-black text-xl leading-tight">Gemini API<br/><span className="text-brand-400 text-sm">Generative AI</span></p>
+            <p className="text-white font-black text-xl leading-tight">OpenAI GPT<br/><span className="text-brand-400 text-sm">Generative AI</span></p>
           </motion.div>
         </div>
       </div>
