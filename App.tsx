@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
-import { SlideData } from './types';
+import { SlideData, SlideProps } from './types';
 
 // Import Slides
 import IntroSlide from './components/slides/01_Intro';
 import TOCSlide from './components/slides/01_TOC';
+import MotivationSlide from './components/slides/02_Motivation';
 import ProblemSlide from './components/slides/02_Problem';
 import SolutionSlide from './components/slides/03_Solution';
 import AccessibilitySlide from './components/slides/03_Accessibility';
@@ -14,35 +15,49 @@ import TechSlide from './components/slides/05_Tech';
 import AISlide from './components/slides/05_AI_Logic';
 import ArchitectureSlide from './components/slides/05_Architecture';
 import DemoSlide from './components/slides/06_Demo';
-import Demo2Slide from './components/slides/06b_Demo';
+import DemoResultSlide from './components/slides/06a_DemoResult';
 import Demo3Slide from './components/slides/06c_Demo';
 import Demo4Slide from './components/slides/06d_Demo';
+import CompareSlide from './components/slides/06e_Compare';
 import ImpactLogicSlide from './components/slides/07_Impact_Logic';
-import ImpactOutcomeSlide from './components/slides/07_Impact_Outcome';
 import RoadmapSlide from './components/slides/08_Roadmap';
 import TeamSlide from './components/slides/08_Team';
 import EndSlide from './components/slides/09_End';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import QADivider from './components/slides/qa/QA_Divider';
+import QAIndex from './components/slides/qa/QA_Index';
+import QASlide from './components/slides/qa/QASlide';
+import { QA_ITEMS } from './components/slides/qa/qaData';
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 const slides: SlideData[] = [
   { id: 1, component: IntroSlide, title: "Intro" },
   { id: 2, component: TOCSlide, title: "목차" },
+  { id: 25, component: MotivationSlide, title: "기획 동기" },
   { id: 3, component: ProblemSlide, title: "제안 배경 및 문제 정의" },
   { id: 4, component: SolutionSlide, title: "서비스 개요" },
-  { id: 5, component: AccessibilitySlide, title: "장애인 체육 지원" },
+  { id: 5, component: AccessibilitySlide, title: "모두를 위한 포용적 분석" },
   { id: 6, component: DataSlide, title: "공공데이터 활용 전략" },
   { id: 7, component: TechSlide, title: "핵심 기술: 통계 모델" },
   { id: 8, component: AISlide, title: "핵심 기술: AI 알고리즘" },
   { id: 9, component: ArchitectureSlide, title: "시스템 구조 및 기술 스택" },
-  { id: 10, component: DemoSlide, title: "서비스 시연 ① 재능 진단" },
-  { id: 101, component: Demo2Slide, title: "서비스 시연 ② AI 코칭·추천" },
-  { id: 102, component: Demo3Slide, title: "서비스 시연 ③ 프로그램 매칭" },
-  { id: 103, component: Demo4Slide, title: "서비스 시연 ④ 인프라 대시보드" },
-  { id: 11, component: ImpactLogicSlide, title: "기대 효과: 서비스 가치" },
-  { id: 12, component: ImpactOutcomeSlide, title: "기대 효과: 정량적 성과" },
+  { id: 10, component: DemoSlide, title: "서비스 둘러보기 ① 재능 진단 · 입력" },
+  { id: 104, component: DemoResultSlide, title: "서비스 둘러보기 ① 재능 진단 · 결과" },
+  { id: 102, component: Demo3Slide, title: "서비스 둘러보기 ② 프로그램 매칭" },
+  { id: 103, component: Demo4Slide, title: "서비스 둘러보기 ③ 인프라 대시보드" },
+  { id: 105, component: CompareSlide, title: "기존 서비스와의 차별점" },
+  { id: 11, component: ImpactLogicSlide, title: "기대 효과: 사회·경제·기술 가치" },
   { id: 13, component: RoadmapSlide, title: "향후 발전 계획" },
   { id: 14, component: TeamSlide, title: "팀 소개" },
-  { id: 15, component: EndSlide, title: "End" },
+  { id: 15, component: EndSlide, title: "End", hideChrome: true },
+  // ── Q&A 부록 (발표 후 질의응답 시 해당 슬라이드로 넘겨 함께 확인) ──
+  { id: 200, component: QADivider, title: "예상 질문 & 답변", hideChrome: true },
+  { id: 201, component: QAIndex, title: "예상 질문 목록", subtitleOverride: "Q&A APPENDIX" },
+  ...QA_ITEMS.map((it) => ({
+    id: 210 + it.no,
+    component: (() => <QASlide item={it} />) as React.FC<SlideProps>,
+    title: "예상 질문 & 답변",
+    subtitleOverride: "Q&A APPENDIX",
+  })),
 ];
 
 function App() {
@@ -82,12 +97,14 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  const CurrentSlideComponent = slides[currentSlide].component;
+  const current = slides[currentSlide];
+  const CurrentSlideComponent = current.component;
+  const showChrome = currentSlide > 0 && !current.hideChrome;
 
   return (
-    <Layout 
-      title={currentSlide > 0 && currentSlide < slides.length - 1 ? slides[currentSlide].title : undefined}
-      subtitle={currentSlide > 0 && currentSlide < slides.length - 1 ? `PART ${currentSlide.toString().padStart(2, '0')}` : undefined}
+    <Layout
+      title={showChrome ? current.title : undefined}
+      subtitle={showChrome ? (current.subtitleOverride ?? `PART ${currentSlide.toString().padStart(2, '0')}`) : undefined}
       pageNumber={currentSlide + 1}
       totalPages={slides.length}
     >

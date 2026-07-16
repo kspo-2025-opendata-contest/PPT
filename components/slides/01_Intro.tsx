@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SlideProps } from '../../types';
-import { Sparkles, Trophy, Database } from 'lucide-react';
+import { Stars, Trophy, Database } from 'react-bootstrap-icons';
 
 const IntroSlide: React.FC<SlideProps> = () => {
   return (
@@ -18,10 +18,10 @@ const IntroSlide: React.FC<SlideProps> = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 font-semibold backdrop-blur-sm shadow-lg shadow-brand-500/10 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 font-medium text-sm backdrop-blur-sm mb-8"
         >
-          <Trophy size={18} />
-          <span>2025 국민체육진흥공단 공공데이터 활용 경진대회 <strong className="text-brand-200">대상 수상작</strong></span>
+          <Stars size={14} className="text-slate-500" />
+          <span>제4회 문화체육관광 AI·데이터 활용 공모전 출품작</span>
         </motion.div>
 
         {/* Title */}
@@ -55,7 +55,7 @@ const IntroSlide: React.FC<SlideProps> = () => {
           {[
             { icon: Database, text: "공공데이터 5종 융합" },
             { icon: Trophy, text: "데이터 기반 재능 진단" },
-            { icon: Sparkles, text: "생성형 AI 맞춤 코칭" }
+            { icon: Stars, text: "생성형 AI 맞춤 코칭" }
           ].map((item, idx) => (
             <div
               key={idx}

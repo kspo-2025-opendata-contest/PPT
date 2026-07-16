@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SlideProps } from '../../types';
-import { Database, Activity, Map, CreditCard, Award, ArrowRight, Zap } from 'lucide-react';
+import { HeartPulse, Activity, Building, TicketPerforatedFill, Award, ArrowRight, LightningChargeFill } from 'react-bootstrap-icons';
 
 const DataSlide: React.FC<SlideProps> = () => {
   const datasets = [
@@ -9,7 +9,7 @@ const DataSlide: React.FC<SlideProps> = () => {
       title: "국민체력 100 측정 데이터",
       fields: "신장, 체중, 악력, 윗몸일으키기, 왕복달리기 등",
       usage: "실측 3.5만명(청소년)을 분석하여 백분위 기반 정규화로 1~5단계의 객관적 재능 지표로 변환",
-      icon: Database,
+      icon: HeartPulse,
       color: "blue"
     },
     {
@@ -23,14 +23,14 @@ const DataSlide: React.FC<SlideProps> = () => {
       title: "전국 공공체육시설 정보",
       fields: "시도, 시군구, 시설수, 인구수",
       usage: "지역별 시설 현황(42,000개)을 분석하여 인구 대비 시설 접근성 격차를 시각화하고 정책 인사이트 제공",
-      icon: Map,
+      icon: Building,
       color: "teal"
     },
     {
       title: "스포츠 강좌 이용권 데이터",
       fields: "지역, 수혜 대상, 수혜자 수",
       usage: "지역별 수혜자 현황(103,513명)을 분석하여 스포츠 복지 사각지대를 파악하고 정책 효과 측정",
-      icon: CreditCard,
+      icon: TicketPerforatedFill,
       color: "purple"
     },
     {
@@ -54,15 +54,14 @@ const DataSlide: React.FC<SlideProps> = () => {
   };
 
   return (
-    <div className="h-full flex flex-col justify-center items-center px-4 overflow-hidden">
-      <div className="mb-6 text-center max-w-4xl">
-        <p className="text-slate-200 text-2xl leading-snug font-medium">
-          <strong className="text-brand-400 font-black">국민체육진흥공단 공공데이터</strong>를 서비스 기능 단위로 결합하여<br/> 
-          실질적인 가치를 창출합니다.
+    <div className="h-full flex flex-col justify-center items-center px-6 overflow-hidden">
+      <div className="mb-7 text-center max-w-5xl">
+        <p className="text-slate-200 text-2xl leading-snug font-medium" style={{ wordBreak: 'keep-all' }}>
+          <strong className="text-brand-400 font-black">국민체육진흥공단 공공데이터</strong>를 서비스 기능 단위로 결합해 실질적인 가치를 창출합니다.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-2.5 w-full max-w-[88%]">
+      <div className="grid grid-cols-1 gap-4 w-full max-w-[93%]">
         {datasets.map((data, idx) => {
           const styles = getStyles(data.color);
           return (
@@ -71,31 +70,31 @@ const DataSlide: React.FC<SlideProps> = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: idx * 0.08 }}
-              className={`flex flex-col md:flex-row items-center gap-4 p-3.5 rounded-2xl border bg-slate-800/80 backdrop-blur-md hover:bg-slate-800 transition-all duration-300 md:min-h-[82px] shadow-lg ${styles.border}`}
+              className={`flex flex-col md:flex-row items-center gap-5 p-5 rounded-2xl border bg-slate-800/80 backdrop-blur-md hover:bg-slate-800 transition-all duration-300 md:min-h-[96px] shadow-lg ${styles.border}`}
             >
               {/* Left Column: Data Source */}
-              <div className="flex items-center gap-4 w-full md:w-[340px] shrink-0">
-                <div className={`w-11 h-11 flex items-center justify-center rounded-xl ${styles.bg} ${styles.text} shrink-0 shadow-inner`}>
-                  <data.icon size={22} />
+              <div className="flex items-center gap-5 w-full md:w-[380px] shrink-0">
+                <div className={`w-14 h-14 flex items-center justify-center rounded-xl ${styles.bg} ${styles.text} shrink-0 shadow-inner`}>
+                  <data.icon size={28} />
                 </div>
                 <div>
-                  <h4 className="text-base font-black text-white leading-tight mb-0.5 whitespace-nowrap">{data.title}</h4>
-                  <span className="text-[11px] text-slate-400 font-mono truncate block font-medium opacity-80">{data.fields}</span>
+                  <h4 className="text-lg font-black text-white leading-tight mb-1 whitespace-nowrap">{data.title}</h4>
+                  <span className="text-xs text-slate-400 font-mono truncate block font-medium opacity-80">{data.fields}</span>
                 </div>
               </div>
 
               {/* Middle Column: Arrow (Centrally aligned) */}
               <div className="hidden md:flex items-center justify-center text-slate-500 shrink-0 opacity-60">
-                <ArrowRight size={20} strokeWidth={3} />
+                <ArrowRight size={24} />
               </div>
-              
+
               {/* Right Column: Usage Description (items-center added for vertical alignment) */}
-              <div className="flex-1 flex items-center gap-4 w-full min-w-0 md:pl-2">
-                 <div className="p-1.5 rounded-lg bg-brand-500/20 text-brand-400 shrink-0">
-                   <Zap size={16} fill="currentColor" />
+              <div className="flex-1 flex items-center gap-5 w-full min-w-0 md:pl-2">
+                 <div className="p-2 rounded-lg bg-brand-500/20 text-brand-400 shrink-0">
+                   <LightningChargeFill size={20} />
                  </div>
                  <div className="flex-1 min-w-0">
-                    <p className="text-slate-100 text-[17px] font-bold leading-snug break-keep">
+                    <p className="text-slate-100 text-lg font-bold leading-snug break-keep">
                       {data.usage}
                     </p>
                  </div>

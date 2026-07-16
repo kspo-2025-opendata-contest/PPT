@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SlideProps } from '../../types';
-import { Layers, Figma, Database, Server } from 'lucide-react';
+import { Braces, Palette, Database, Server, Trophy } from 'react-bootstrap-icons';
 
 const TeamSlide: React.FC<SlideProps> = () => {
   const members = [
@@ -14,7 +14,7 @@ const TeamSlide: React.FC<SlideProps> = () => {
           풀스택 개발 · 데이터 분석
         </>
       ),
-      icon: Layers,
+      icon: Braces,
       color: "bg-brand-500"
     },
     {
@@ -26,7 +26,7 @@ const TeamSlide: React.FC<SlideProps> = () => {
           UI/UX 디자인
         </>
       ),
-      icon: Figma,
+      icon: Palette,
       color: "bg-blue-500"
     },
     {
@@ -59,7 +59,10 @@ const TeamSlide: React.FC<SlideProps> = () => {
     <div className="h-full flex flex-col justify-center items-center pb-16">
       <div className="text-center mb-10">
         <h2 className="text-4xl font-bold mb-4">Team. 숨어있는 재능을 찾아서</h2>
-        <p className="text-slate-300 text-xl">데이터로 세상을 바꾸는 사람들</p>
+        <p className="text-slate-300 text-xl mb-4">데이터로 세상을 바꾸는 사람들</p>
+        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-sm font-medium">
+          <Trophy size={14} className="text-amber-400/80" /> 2025 국민체육진흥공단 공공데이터 활용 경진대회 대상 수상팀
+        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-[90%] w-full px-4">

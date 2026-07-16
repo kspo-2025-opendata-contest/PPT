@@ -1,73 +1,45 @@
 import puppeteer from 'puppeteer';
 import { PDFDocument } from 'pdf-lib';
 import fs from 'fs';
-import path from 'path';
 
-const TOTAL_SLIDES = 15;
-const OUTPUT_PATH = '/Users/shinjuyong/Desktop/경진대회 발표자료(1등)/숨인재_발표자료_v3.pdf';
+const TOTAL_SLIDES = 38;
+const PORT = 4173; // vite preview
+const OUTPUT_PATH = '/Users/shinjuyong/Desktop/경진대회 발표자료(1등)/범정부추천후보_아이디어_숨어있는재능을찾아서_숨인재.pdf';
+
+// 16:9 네이티브 + 초고배율 캡처
+const CSS_W = 1600;
+const CSS_H = 900;
+const SCALE = 3; // 출력 4800 x 2700 px (초고화질)
 
 async function generatePDF() {
   console.log('브라우저 시작...');
-
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--force-device-scale-factor=3', '--high-dpi-support=1'],
   });
 
   const page = await browser.newPage();
-
-  // 사용자 스크린샷 기준 (3024x1616 / 2 = 1512x808)
-  const viewportWidth = 1512;
-  const viewportHeight = 808;
-
-  await page.setViewport({
-    width: viewportWidth,
-    height: viewportHeight,
-    deviceScaleFactor: 2 // 맥북 Retina (출력: 3024x1616)
-  });
+  await page.setViewport({ width: CSS_W, height: CSS_H, deviceScaleFactor: SCALE });
 
   const pdfDoc = await PDFDocument.create();
 
-  console.log('슬라이드 캡처 시작...');
-
   for (let i = 0; i < TOTAL_SLIDES; i++) {
     console.log(`슬라이드 ${i + 1}/${TOTAL_SLIDES} 캡처 중...`);
+    await page.goto(`http://localhost:${PORT}/?slide=${i}`, { waitUntil: 'networkidle0', timeout: 30000 });
+    // framer-motion 진입 애니메이션 완료 대기
+    await new Promise((r) => setTimeout(r, 3000));
 
-    // 각 슬라이드로 이동 (URL 파라미터로 슬라이드 번호 전달)
-    await page.goto(`http://localhost:3000/?slide=${i}`, {
-      waitUntil: 'networkidle0',
-      timeout: 30000
-    });
-
-    // 애니메이션 완료 대기 (framer-motion 진입 애니메이션 여유)
-    await new Promise(resolve => setTimeout(resolve, 3000));
-
-    // 스크린샷 캡처
-    const screenshot = await page.screenshot({
-      type: 'png',
-      fullPage: false
-    });
-
-    // PDF에 이미지 추가
+    const screenshot = await page.screenshot({ type: 'png', fullPage: false });
     const image = await pdfDoc.embedPng(screenshot);
-
-    const pdfPage = pdfDoc.addPage([viewportWidth, viewportHeight]);
-    pdfPage.drawImage(image, {
-      x: 0,
-      y: 0,
-      width: viewportWidth,
-      height: viewportHeight
-    });
+    const pdfPage = pdfDoc.addPage([CSS_W, CSS_H]);
+    pdfPage.drawImage(image, { x: 0, y: 0, width: CSS_W, height: CSS_H });
   }
 
   console.log('PDF 저장 중...');
-
   const pdfBytes = await pdfDoc.save();
   fs.writeFileSync(OUTPUT_PATH, pdfBytes);
-
   await browser.close();
-
   console.log(`PDF 생성 완료: ${OUTPUT_PATH}`);
 }
 
-generatePDF().catch(console.error);
+generatePDF().catch((e) => { console.error(e); process.exit(1); });

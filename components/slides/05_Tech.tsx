@@ -1,34 +1,53 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SlideProps } from '../../types';
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, ReferenceLine } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  ReferenceLine,
+  ReferenceArea,
+} from 'recharts';
 
-// Generate bell curve data using integers to avoid floating point precision issues
-const generateBellCurve = () => {
+// 실측 분포 히스토그램(예시 형상).
+// 핵심: 정규분포를 "가정"하지 않고, 국민체력100 실측 표본의 경험적 분포를 그대로 사용.
+// p5(하위 5%)=0점, p95(상위 5%)=100점 앵커로 선형 정규화한다.
+const P5_IDX = 5;   // 하위 5% 지점 → 0점
+const P95_IDX = 39; // 상위 5% 지점 → 100점
+const YOU_IDX = 34; // 사용자 위치(예시)
+
+const generateEmpiricalHistogram = () => {
   const data = [];
-  // Range from -3.5 to 3.5 in steps of 0.1
-  for (let i = -35; i <= 35; i++) {
-    const z = i / 10;
-    const val = (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-(z * z) / 2);
-    // T-Score conversion: 50 + 10*z
-    data.push({ z: parseFloat(z.toFixed(1)), y: val, label: (z * 10 + 50).toFixed(0) }); 
+  for (let i = 0; i <= 44; i++) {
+    // 약간 우편향된 경험적 형상 + 미세한 요철(실측 히스토그램처럼 보이도록)
+    const base = Math.exp(-((i - 19) * (i - 19)) / (2 * 9 * 9));
+    const skew = i > 19 ? 0.9 : 1.05; // 오른쪽 꼬리를 살짝 두껍게
+    const wiggle = 1 + 0.08 * Math.sin(i * 1.3) + 0.05 * Math.cos(i * 0.7);
+    const y = base * skew * wiggle;
+    data.push({
+      x: i,
+      y: Math.max(0.01, parseFloat(y.toFixed(4))),
+      inBand: i >= P5_IDX && i <= P95_IDX,
+    });
   }
   return data;
 };
 
-const data = generateBellCurve();
+const data = generateEmpiricalHistogram();
 
 const TechSlide: React.FC<SlideProps> = () => {
   return (
     <div className="h-full flex flex-col md:flex-row gap-12 items-center px-4">
-      
-      {/* Visual: Normal Distribution */}
-      {/* Added min-w-0 to ensure Recharts sizes correctly in flex context */}
-      <div className="relative h-[450px] w-full md:w-1/2 min-w-0 bg-slate-800/30 rounded-[2rem] border border-white/5 flex items-center justify-center overflow-hidden p-6 shadow-2xl">
-        <h3 className="absolute top-6 right-6 text-white/30 text-base font-bold tracking-widest">STATISTICAL MODEL</h3>
-        
+
+      {/* Visual: 실측 분포 + p5~p95 선형 정규화 */}
+      <div className="relative h-[450px] w-full md:w-1/2 min-w-0 bg-slate-800/30 rounded-[2rem] border border-white/5 flex flex-col justify-center overflow-hidden p-6 shadow-2xl">
+        <h3 className="absolute top-6 right-6 text-white/30 text-base font-bold tracking-widest">EMPIRICAL MODEL</h3>
+
         {/* Formula Badge */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
@@ -37,60 +56,85 @@ const TechSlide: React.FC<SlideProps> = () => {
           <code className="text-brand-400 font-mono text-lg font-bold">P5~P95 → 0-100</code>
         </motion.div>
 
-        <ResponsiveContainer width="100%" height="80%">
-          <AreaChart data={data} margin={{ top: 20, right: 0, left: 0, bottom: 0 }}>
-            <defs>
-              <linearGradient id="colorY" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#14b8a6" stopOpacity={0}/>
-              </linearGradient>
-            </defs>
-            {/* 
-              XAxis must be type="number" for ReferenceLine to position correctly by value 
-              instead of by index. domain includes data min/max.
-            */}
-            <XAxis dataKey="z" type="number" domain={['dataMin', 'dataMax']} hide />
-            <YAxis hide />
-            <Area type="monotone" dataKey="y" stroke="#14b8a6" strokeWidth={3} fillOpacity={1} fill="url(#colorY)" isAnimationActive={false} />
-            {/* User Position at Z = 1.7 (Top 4.5% approx, Grade 1) */}
-            <ReferenceLine x={1.7} stroke="#fff" strokeWidth={2} strokeDasharray="5 5" label={{ position: 'top', value: 'You (1등급)', fill: 'white', fontSize: 18, fontWeight: 'bold' }} />
-          </AreaChart>
-        </ResponsiveContainer>
+        <div className="w-full h-[78%] mt-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data} margin={{ top: 30, right: 8, left: 8, bottom: 8 }} barCategoryGap={1}>
+              <XAxis dataKey="x" hide />
+              <YAxis hide domain={[0, 'dataMax']} />
 
-        <div className="absolute bottom-4 w-full px-12 flex justify-between text-sm text-slate-400 font-mono font-bold">
-           <span>하위 1%</span>
-           <span>평균 (50%)</span>
-           <span>상위 1%</span>
+              {/* p5~p95 유효 구간 음영 */}
+              <ReferenceArea x1={P5_IDX} x2={P95_IDX} fill="#14b8a6" fillOpacity={0.08} />
+
+              <Bar dataKey="y" isAnimationActive={false} radius={[2, 2, 0, 0]}>
+                {data.map((d, idx) => (
+                  <Cell
+                    key={idx}
+                    fill={d.x === YOU_IDX ? '#ffffff' : d.inBand ? '#14b8a6' : '#334155'}
+                    fillOpacity={d.x === YOU_IDX ? 1 : d.inBand ? 0.7 : 0.5}
+                  />
+                ))}
+              </Bar>
+
+              {/* p5 = 0점 앵커 */}
+              <ReferenceLine
+                x={P5_IDX}
+                stroke="#64748b"
+                strokeWidth={2}
+                strokeDasharray="4 4"
+                label={{ position: 'top', value: 'P5 → 0점', fill: '#94a3b8', fontSize: 13, fontWeight: 'bold' }}
+              />
+              {/* p95 = 100점 앵커 */}
+              <ReferenceLine
+                x={P95_IDX}
+                stroke="#64748b"
+                strokeWidth={2}
+                strokeDasharray="4 4"
+                label={{ position: 'top', value: 'P95 → 100점', fill: '#94a3b8', fontSize: 13, fontWeight: 'bold' }}
+              />
+              {/* 사용자 위치 */}
+              <ReferenceLine
+                x={YOU_IDX}
+                stroke="#fff"
+                strokeWidth={2}
+                label={{ position: 'top', value: 'You', fill: 'white', fontSize: 16, fontWeight: 'bold' }}
+              />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
+
+        <div className="w-full px-8 flex justify-between text-sm text-slate-400 font-mono font-bold mt-1">
+          <span>또래 하위</span>
+          <span className="text-brand-300">실측 분포</span>
+          <span>또래 상위</span>
+        </div>
+        <p className="text-center text-xs text-slate-500 mt-2">정규분포 가정 없음 · 실측 표본 3.5만명의 경험적 분포</p>
       </div>
 
       {/* Content */}
       <div className="flex-1 space-y-8">
         <div>
-          <h2 className="text-3xl font-bold mb-4 text-white">재능 등급 산출 알고리즘</h2>
-          <p className="text-slate-300 text-lg leading-relaxed">
-            국민체력100 실측 3.5만명(청소년)을 모집단으로 하여,<br/>
-            개인의 기록이 전체 분포에서 어느 위치에 해당하는지<br/>
-            <strong className="text-white">실데이터로 검증된 백분위 정규화 모델</strong>로 분석합니다.
+          <h2 className="text-4xl font-bold mb-4 text-white">재능 등급 산출 알고리즘</h2>
+          <p className="text-slate-300 text-xl leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+            국민체력100 실측 3.5만명(청소년)을 모집단으로, 개인의 기록이 전체 분포에서 어느 위치인지 <strong className="text-white">실측 백분위 기반 정규화 모델</strong>로 분석합니다.
           </p>
         </div>
 
         <div className="space-y-6">
           <div className="relative pl-8 border-l-4 border-slate-700">
             <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-800 border-4 border-brand-500" />
-            <h4 className="font-bold text-white text-xl mb-2">1. 데이터 정규화 (Normalization)</h4>
+            <h4 className="font-bold text-white text-xl mb-2">1. 백분위 선형 정규화 (P5~P95)</h4>
             <p className="text-slate-300 text-base leading-relaxed">
-              성별·연령별로 상이한 체력 분포를 동일 기준으로 정규화하여<br/>
-              서로 다른 항목(근력 vs 지구력)간의 <strong className="text-white">비교 불가능 문제를 해결</strong>했습니다.
+              성별·항목별 실측 분포의 <strong className="text-white">하위 5%(P5)를 0점, 상위 5%(P95)를 100점</strong>으로 매핑하여
+              근력·지구력처럼 <strong className="text-white">단위가 다른 항목을 동일 척도로 비교</strong>합니다.
             </p>
           </div>
 
           <div className="relative pl-8 border-l-4 border-slate-700">
              <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-800 border-4 border-brand-500" />
-            <h4 className="font-bold text-white text-xl mb-2">2. 백분위 기반 5단계 등급제</h4>
+            <h4 className="font-bold text-white text-xl mb-2">2. 실측 분포 기반 5단계 등급제</h4>
             <p className="text-slate-300 text-base leading-relaxed">
-              각 체력 항목을 <strong className="text-white">0~100으로 정규화</strong>하고, 실제 점수 분포로 임계값을 보정하여<br/>
-              1~5단계의 직관적인 '재능 등급'을 부여합니다.
+              가중합 점수를 <strong className="text-white">실제 점수 분포로 보정한 임계값(82/69/54/43)</strong>에 대입해
+              '재능 등급'을 부여합니다. 등급별 백분위 주장이 실제 비율과 일치하도록 캘리브레이션했습니다.
             </p>
           </div>
 
@@ -101,6 +145,10 @@ const TechSlide: React.FC<SlideProps> = () => {
                <strong className="text-white">"또래 상위 5% 수준"</strong>이라는 상대적 위치 정보가 재능 발견의 핵심입니다.
              </p>
           </div>
+
+          <p className="text-sm text-slate-400 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+            ※ <strong className="text-slate-300">종목 적합도</strong>는 스포츠과학 문헌 기반 가중치로 설계하며, 확정이 아닌 <strong className="text-white">'도전 우선순위' 제안</strong>입니다.
+          </p>
         </div>
       </div>
     </div>
